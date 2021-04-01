@@ -1,0 +1,31 @@
+	class reverse_iterator {
+		/*добавить итератор для перемещения от наибольшего к наименьшему*/
+		Node* current;
+	public:
+		reverse_iterator(Node* p = nullptr) : current(p) {}
+		ElementType& operator*()const { return current->data; }
+		const ElementType& operator*() { return current->data; }
+		bool operator==(const reverse_iterator& p)const { return current == p.current; }
+		bool operator!=(const reverse_iterator& p)const { return current != p.current; }
+		reverse_iterator& operator++() {
+			if (current) current = current->reverse_next();
+			else throw "Iterator: out of bounds";
+			return *this;
+		}
+		reverse_iterator operator++(int) {
+			Node* tmp = current;
+			if (current) current = current->reverse_next();
+			else throw "Iterator: out of bounds";
+			return reverse_iterator(tmp);
+		}
+	};
+	reverse_iterator rbegin()const {
+		/*добавить реверс_итератор на первый элемент*/
+		if (root)
+			return reverse_iterator(root->max());
+		return rend();
+	}
+	reverse_iterator rend()const {
+		/*добавить реверс_итератор на последний элемент*/
+		return reverse_iterator(nullptr);
+	}
